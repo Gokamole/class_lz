@@ -28,25 +28,32 @@ class Octagon:
         return 8 * self.side_length
     
     def draw(self):
-        angles = [i * math.pi / 4 for i in range(8)]  # 8 углов для октагона
-        x = [self.side_length * math.cos(angle) for angle in angles]
-        y = [self.side_length * math.sin(angle) for angle in angles]
+        # Рисуем октаногон
+        plt.figure()
+        angles = [i * (math.pi / 4) for i in range(8)]
+        x = [self.side_length * (math.cos(angle)) for angle in angles]
+        y = [self.side_length * (math.sin(angle)) for angle in angles]
         
-        plt.fill(x, y, color='orange', alpha=0.5, label='Octagon')
-        
-        # Вписанная окружность
-        inscribed_radius = self.get_radius_inscribed()
-        circle_inscribed = plt.Circle((0, 0), inscribed_radius, color='blue', fill=False, label='Inscribed Circle')
-        plt.gca().add_artist(circle_inscribed)
-        
-        # Описанная окружность
-        circumscribed_radius = self.get_radius_circumscribed()
-        circle_circumscribed = plt.Circle((0, 0), circumscribed_radius, color='red', fill=False, linestyle='--', label='Circumscribed Circle')
+        # Рисуем октагон
+        plt.fill(x, y, color='lightblue', label='Octagon')
+        plt.plot(x + [x[0]], y + [y[0]], color='blue')
+
+        # Рисуем описанную окружность
+        R = self.get_radius_circumscribed()
+        circle_circumscribed = plt.Circle((0, 0), R, color='orange', fill=False, label='Circumscribed Circle')
         plt.gca().add_artist(circle_circumscribed)
 
-        plt.xlim(-circumscribed_radius - 1, circumscribed_radius + 1)
-        plt.ylim(-circumscribed_radius - 1, circumscribed_radius + 1)
+        # Рисуем вписанную окружность
+        r = self.get_radius_inscribed()
+        circle_inscribed = plt.Circle((0, 0), r, color='green', fill=False, label='Inscribed Circle')
+        plt.gca().add_artist(circle_inscribed)
+
+        plt.xlim(-R - 1, R + 1)
+        plt.ylim(-R - 1, R + 1)
         plt.gca().set_aspect('equal', adjustable='box')
-        plt.title('Octagon with Inscribed and Circumscribed Circles')
+        plt.axhline(0, color='black',linewidth=0.5, ls='--')
+        plt.axvline(0, color='black',linewidth=0.5, ls='--')
+        plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
+        plt.title('Octagon with Circumscribed and Inscribed Circles')
         plt.legend()
         plt.show()
