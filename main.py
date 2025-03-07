@@ -1,5 +1,7 @@
+# Импорт класса
 from octagon import Octagon
 
+# Главная функция
 def main():
     side_length = float(input(f"Введите длину стороны октагона "))  # длина стороны октагона
     octagon = Octagon(side_length)
